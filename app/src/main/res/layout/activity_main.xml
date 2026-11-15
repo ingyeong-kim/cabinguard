@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <!-- 왼쪽: 차량 신호와 시뮬레이션 조작 -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="3"
+        android:background="@drawable/bg_panel"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="차량 신호"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/accent"
+                android:textSize="13sp" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="시동" />
+                <TextView android:id="@+id/tv_ign" style="@style/SignalValue" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="기어" />
+                <TextView android:id="@+id/tv_gear" style="@style/SignalValue" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="주차브레이크 걸기/풀기" />
+                <TextView android:id="@+id/tv_pb" style="@style/SignalValue" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="운전석 문" />
+                <TextView android:id="@+id/tv_door" style="@style/SignalValue" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="외기온도" />
+                <TextView android:id="@+id/tv_out" style="@style/SignalValue" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="하늘상태(예보)" />
+                <TextView android:id="@+id/tv_sky" style="@style/SignalValue" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="5dp">
+                <TextView style="@style/SignalKey" android:text="예상 주차시간" />
+                <TextView android:id="@+id/tv_park" style="@style/SignalValue" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="4dp"
+                android:text="시뮬레이션 조작"
+                android:textColor="@color/sub"
+                android:textSize="13sp" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btn_gear_d" style="@style/SimButton" android:text="기어 D (출발)" />
+                <Button android:id="@+id/btn_gear_p" style="@style/SimButton" android:text="기어 P" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btn_pb" style="@style/SimButton" android:text="주차브레이크 걸기/풀기" />
+                <Button android:id="@+id/btn_door" style="@style/SimButton" android:text="운전석 문 열기/닫기" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btn_temp_down" style="@style/SimButton" android:text="외기 −2℃" />
+                <Button android:id="@+id/btn_temp_up" style="@style/SimButton" android:text="외기 +2℃" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btn_sky" style="@style/SimButton" android:text="하늘상태 변경" />
+                <Button android:id="@+id/btn_park_time" style="@style/SimButton" android:text="주차시간 변경" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btn_reboard" style="@style/SimButton" android:text="주차 후 재탑승" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 오른쪽: 앱 화면 -->
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_panel"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="캐빈가드"
+                        android:textColor="@color/text"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/sub"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <!-- 주차 위험 예측 -->
+                <LinearLayout
+                    android:id="@+id/pred_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:id="@+id/tv_pred_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_pred_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="3dp"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="차량 보관 물품"
+                    android:textColor="@color/text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_lock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/sub"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/et_item"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:hint="물품 이름 (예: 보조배터리)"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/text"
+                        android:textColorHint="@color/sub"
+                        android:textSize="16sp" />
+                    <Button
+                        android:id="@+id/btn_add"
+                        android:layout_width="90dp"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_button_accent"
+                        android:text="등록"
+                        android:textColor="#1A0E05"
+                        android:textSize="15sp" />
+                    <Button
+                        android:id="@+id/btn_voice"
+                        android:layout_width="110dp"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_button"
+                        android:text="음성 등록"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/chips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/item_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/tv_voice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_card"
+                    android:padding="14dp"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- 하차 알림 -->
+        <LinearLayout
+            android:id="@+id/alert_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_alert"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_alert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_alert_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:textColor="#D9A5A5"
+                android:textSize="16sp" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:id="@+id/alert_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
+            <Button
+                android:id="@+id/btn_alert_skip"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_gravity="end"
+                android:background="@drawable/bg_button"
+                android:paddingHorizontal="18dp"
+                android:text="이번에는 두고 내릴게요"
+                android:textColor="@color/text"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 재탑승 열기 배출 가이드 -->
+        <LinearLayout
+            android:id="@+id/guide_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_panel"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_guide_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_guide_body"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:lineSpacingExtra="6dp"
+                android:textColor="@color/text"
+                android:textSize="19sp" />
+            <Button
+                android:id="@+id/btn_guide_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_gravity="end"
+                android:background="@drawable/bg_button_accent"
+                android:paddingHorizontal="24dp"
+                android:text="확인했어요"
+                android:textColor="#1A0E05"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

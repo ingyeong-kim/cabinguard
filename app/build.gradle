@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.application'
+}
+
+// CI에서 생성하는 릴리스 서명 키. 없으면(로컬 빌드) 디버그 키로 서명한다.
+def releaseKeystore = rootProject.file('ci-release.keystore')
+
+android {
+    namespace 'ai.cabinguard.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'ai.cabinguard.app'
+        minSdk 28          // 공모전 요구사항: Android API 28 이상
+        targetSdk 34       // Pleos Connect Emulator 2.1.0 시스템 이미지(API 34)
+        versionCode 1
+        versionName '0.1.0'
+    }
+
+    // AAOS Car API(android.car.*) 사용
+    useLibrary 'android.car'
+
+    signingConfigs {
+        release {
+            if (releaseKeystore.exists()) {
+                storeFile releaseKeystore
+                storePassword System.getenv('KS_PASS') ?: 'cabinguard'
+                keyAlias 'cabinguard'
+                keyPassword System.getenv('KS_PASS') ?: 'cabinguard'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig releaseKeystore.exists() ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}

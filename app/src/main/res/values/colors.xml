@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#0B0F17</color>
+    <color name="panel">#111724</color>
+    <color name="card">#171F30</color>
+    <color name="line">#24304A</color>
+    <color name="text">#E8EDF5</color>
+    <color name="sub">#8A97AD</color>
+    <color name="accent">#FF8A3D</color>
+    <color name="danger">#FF6B6B</color>
+    <color name="danger_bg">#3A1518</color>
+    <color name="caution">#FFC35A</color>
+    <color name="safe">#5FE0A0</color>
+    <color name="safe_bg">#123524</color>
+    <color name="alert_bg">#1A0F10</color>
+</resources>

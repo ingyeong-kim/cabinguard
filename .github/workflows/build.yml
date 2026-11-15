@@ -1,0 +1,72 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'apk/**'
+      - 'docs/ci/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APK_NAME: CabinGuard_캐빈가드_release.apk
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 릴리스 서명 키 생성
+        run: |
+          keytool -genkeypair -keystore ci-release.keystore -storepass cabinguard -keypass cabinguard \
+            -alias cabinguard -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=CabinGuard"
+
+      - name: 단위 테스트와 release APK 빌드
+        run: |
+          chmod +x gradlew
+          set -o pipefail
+          ./gradlew --no-daemon testReleaseUnitTest assembleRelease 2>&1 | tee build.log
+
+      - name: KVM 사용 설정
+        if: success()
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: 에뮬레이터 실행 검증 (API 34, 가로 화면)
+        if: success()
+        continue-on-error: true
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          profile: pixel_tablet
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          script: python3 scripts/ci_smoke.py app/build/outputs/apk/release/app-release.apk docs/ci
+
+      - name: 빌드 결과를 저장소에 반영
+        if: always()
+        run: |
+          mkdir -p apk docs/ci
+          tail -n 150 build.log > docs/ci/build.log || true
+          if [ -f app/build/outputs/apk/release/app-release.apk ]; then
+            cp app/build/outputs/apk/release/app-release.apk "apk/${APK_NAME}"
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f apk docs/ci
+          git commit -m "ci: release APK 빌드와 실행 검증 결과" || exit 0
+          git pull --rebase
+          git push
