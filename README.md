@@ -6,11 +6,11 @@
 
 ## APK 파일 위치
 
-`apk/CabinGuard_캐빈가드_release.apk` (GitHub Actions가 release 빌드 후 자동으로 올립니다)
+`apk/김인경_캐빈가드_release.apk` (GitHub Actions가 release 빌드 후 자동으로 올립니다)
 
 ## 실행 방법
 
-1. APK 설치: `adb install -r apk/CabinGuard_캐빈가드_release.apk`
+1. APK 설치: `adb install -r apk/김인경_캐빈가드_release.apk`
 2. 앱 목록에서 **캐빈가드** 실행 (가로 화면)
 3. 아래 순서로 누르면 핵심 흐름을 볼 수 있습니다.
 
@@ -27,6 +27,18 @@
 
 소스에서 직접 빌드하려면 JDK 17에서 `./gradlew assembleRelease`를 실행합니다.
 
+## 실행 화면
+
+GitHub Actions의 에뮬레이터에서 자동 검증 중 저장한 실제 화면입니다.
+
+| 주행 중 주차 위험 예측 | 하차 알림 |
+|---|---|
+| ![주행 중 예측](docs/ci/03_driving_prediction.png) | ![하차 알림](docs/ci/04_exit_alert.png) |
+
+| 문 열림 재알림 | 재탑승 가이드와 예측 보정 |
+|---|---|
+| ![재알림](docs/ci/05_door_reminder.png) | ![재탑승](docs/ci/07_reboard_guide.png) |
+
 ## 테스트 환경 및 필요한 설정
 
 - minSdk 28, targetSdk 34, Gradle 8.7, Android Gradle Plugin 8.5.2, Java
@@ -38,7 +50,8 @@
 ### 검증 범위 (1차 제출 시점)
 
 - 위험 판정 로직: 단위 테스트 6건 (`app/src/test`), 빌드할 때마다 자동 실행
-- 앱 실행: GitHub Actions의 Android 14(API 34) 에뮬레이터에서 위 1~8번 흐름을 자동으로 눌러 보고 화면을 저장합니다. 결과는 `docs/ci/smoke-test.txt`, 화면은 `docs/ci/*.png`에 있습니다.
+- 앱 실행: GitHub Actions의 Android 14(API 34) 태블릿 에뮬레이터(2,560 x 1,600, 시뮬레이션 모드)에서 위 1~8번 흐름을 자동으로 눌러 보고 9개 확인 항목을 모두 통과했습니다. 결과는 `docs/ci/smoke-test.txt`, 화면은 `docs/ci/*.png`에 있습니다.
+- AAOS Car API 구독 코드는 빌드까지 확인했고, 실제 차량 신호 수신은 Automotive 에뮬레이터에서 아직 확인하지 못했습니다.
 - Pleos Connect Emulator 2.1.0에서의 실행 검증과 Pleos Connect SDK 연동은 2차 개발 범위입니다.
 
 ## 개발 대상 Pleos Connect 에뮬레이터 버전과 화면 규격

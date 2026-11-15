@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 env:
-  APK_NAME: CabinGuard_캐빈가드_release.apk
+  APK_NAME: 김인경_캐빈가드_release.apk
 
 jobs:
   build:
