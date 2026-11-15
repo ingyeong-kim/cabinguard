@@ -433,7 +433,11 @@ public class MainActivity extends Activity implements VehicleSignals.Listener {
         tvLock.setText(editable
                 ? "말하거나 입력해서 등록하면 위험 카테고리로 자동 분류합니다"
                 : "주행 중에는 등록과 수정을 잠급니다 (P단에서 가능)");
-        if (!alertActive && !signals.isGearPark()) tvStatus.setText("주행 중 · 화면 알림 꺼짐");
+        if (!alertActive && !signals.isGearPark()) {
+            tvStatus.setText("주행 중 · 화면 알림 꺼짐");
+        } else if (!alertActive && tvStatus.getText().toString().startsWith("주행 중")) {
+            tvStatus.setText(signals.isParked() ? "" : "정차 중 · 주차브레이크 대기");
+        }
 
         List<RiskEngine.Assessment> all = assessNow();
         RiskEngine.Level worst = RiskEngine.worst(all);
